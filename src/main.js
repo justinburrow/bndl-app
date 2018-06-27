@@ -9,4 +9,4 @@ Vue.config.productionTip = false;
 
 new Vue({
   render: h => h(App)
-}).$mount("#bundler");
+}).$mount("#app");

@@ -1,16 +1,16 @@
 <template>
   <div id="bundler">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <SubProductList :subProducts="subProducts" />
   </div>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
+import SubProductList from "./components/SubProductList.vue";
 
 export default {
   name: "bundler",
   components: {
-    HelloWorld
+    SubProductList
   },
   data() {
     return {
