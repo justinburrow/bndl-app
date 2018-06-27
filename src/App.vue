@@ -18,7 +18,7 @@ export default {
       subProducts: []
     };
   },
-  created: function() {
+  created() {
     this.getProducts();
   },
   methods: {

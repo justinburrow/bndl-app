@@ -19,4 +19,11 @@ export default {
 </script>
 
 <style lang="scss">
+#subProductList {
+  display: grid;
+  max-width: 1200px;
+  margin: 0 auto;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-column-gap: 50px;
+}
 </style>
