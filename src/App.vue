@@ -1,6 +1,5 @@
 <template>
-  <div id="app">
-    <img src="./assets/logo.png">
+  <div id="bundler">
     <HelloWorld msg="Welcome to Your Vue.js App"/>
   </div>
 </template>
@@ -9,15 +8,34 @@
 import HelloWorld from "./components/HelloWorld.vue";
 
 export default {
-  name: "app",
+  name: "bundler",
   components: {
     HelloWorld
+  },
+  data() {
+    return {
+      catalog: []
+    };
+  },
+  created: function() {
+    this.getProducts();
+  },
+  methods: {
+    getProducts: function() {
+    this.axios.get('http://justinburrow.com/misc/g/braap.php')
+    .then(response => {
+         this.catalog = response.data;
+    })
+    .catch(error => {
+      console.log(error);
+    })
+    }
   }
 };
 </script>
 
 <style lang="scss">
-#app {
+#bundler {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
