@@ -14,22 +14,35 @@ export default {
   },
   data() {
     return {
-      catalog: []
+      catalog: [],
+      subProducts: []
     };
   },
   created: function() {
     this.getProducts();
   },
   methods: {
+    // Gets products from external php script which hits Shopify's API with credentials
     getProducts: function() {
-    this.axios.get('http://justinburrow.com/misc/g/braap.php')
-    .then(response => {
+      this.axios.get('http://justinburrow.com/misc/g/braap.php')
+      .then(response => {
          this.catalog = response.data;
-    })
-    .catch(error => {
-      console.log(error);
-    })
-    }
+       })
+       .then( ()=> {
+         this.filterSub();
+       })
+       .catch(error => {
+         console.log(error);
+       })
+     },
+     // Takes the returned products, pushes all the "true" Recharge items to subProducts
+     filterSub: function() {
+       for (let product of this.catalog.products) {
+         if (product.tags.indexOf('Subscription') > -1 && product.title.indexOf('Bundle') < 0) {
+           this.subProducts.push(product);
+         }
+       }
+     }
   }
 };
 </script>
