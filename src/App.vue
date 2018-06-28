@@ -1,11 +1,12 @@
 <template>
   <div id="bundler">
-    <SubProductList :subProducts="subProducts" />
+    <SubProductList :subProducts="subProducts" :bundle="bundle" />
   </div>
 </template>
 
 <script>
 import SubProductList from "./components/SubProductList.vue";
+import bus from './components/bus.js';
 
 export default {
   name: "bundler",
@@ -15,11 +16,25 @@ export default {
   data() {
     return {
       catalog: [],
-      subProducts: []
+      subProducts: [],
+      bundle: []
     };
   },
   created() {
     this.getProducts();
+    bus.$on('bundleAdd', (product) => {
+      if (this.bundle.length < 3) {
+        this.bundle.push(product);
+      }
+      else {
+        console.log('too big!');
+      }
+    });
+    bus.$on('removeItem', (id) => {
+      this.bundle = this.bundle.filter((product) => {
+        return product.id !== id;
+      })
+    });
   },
   methods: {
     // Gets products from external php script which hits Shopify's API with credentials
@@ -38,7 +53,7 @@ export default {
      // Takes the returned products, pushes all the "true" Recharge items to subProducts
      filterSub: function() {
        for (let product of this.catalog.products) {
-         if (product.tags.indexOf('Subscription') > -1 && product.title.indexOf('Bundle') < 0) {
+         if (product.tags.indexOf('Subscription') > -1 && product.title.indexOf('Bundle') < 0 && product.template_suffix.indexOf('coming-soon') < 0) {
            this.subProducts.push(product);
          }
        }
@@ -48,12 +63,9 @@ export default {
 </script>
 
 <style lang="scss">
-#bundler {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+  #bundler {
+    margin: 60px auto 0 auto;
+    text-align: center;
+    font-family: 'soleil', 'Helvetica Neue', Helvetica, sans-serif;
+  }
 </style>
