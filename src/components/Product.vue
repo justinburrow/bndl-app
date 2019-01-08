@@ -42,6 +42,7 @@ export default {
   .image {
     text-align: center;
     margin-bottom: 10px;
+    padding: 5px;
     img {
       max-width: 150px;
       width: 100%;

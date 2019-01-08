@@ -37,7 +37,6 @@ export default {
 #bundleTally {
   display: inline-block;
   width: 300px;
-  background: orange;
   vertical-align: top;
 }
 </style>
